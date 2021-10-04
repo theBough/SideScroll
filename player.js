@@ -31,8 +31,11 @@ function Player(x, y, w, h) {
     if (keyIsDown(LEFT_ARROW)) {
       this.x -= 5;
     }
-    if(keyIsDown(32)){
+    if(keyIsDown(32) && this.isOnGround()){
       this.yVelocity += -this.jumpStrength;
     }//end if
   }; //end function
+  this.isOnGround = function(){
+      return this.y == g.y - this.h;
+  }//end isOnGround
 } //end Ground
