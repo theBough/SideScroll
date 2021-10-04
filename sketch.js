@@ -13,10 +13,13 @@ function draw() {
   background(0);
   p.display();
   p.update();
-  g.display();
+  g.display();   
   g2.display();
-  g.update();
-  g2.update();
+  if(p.x> 250){
+    g.update();
+    g2.update();
+  }
+  
  
   
 }//end draw
