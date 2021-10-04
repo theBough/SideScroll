@@ -34,7 +34,7 @@ function Player(x, y, w, h) {
       this.yVelocity = 0;
     }//end if
     
-    if (keyIsDown(RIGHT_ARROW)) {
+    if (keyIsDown(RIGHT_ARROW) && this.x <251) {
       this.x += 5;
     }
     if (keyIsDown(LEFT_ARROW)) {
