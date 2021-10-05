@@ -1,0 +1,24 @@
+let imgPlatform;
+let platformSpeed = -1;
+
+function Platform(x,y,w,h){
+  this.x = x;
+  this.y = y;
+  this.w = w;
+  this.h = h;
+  this.show = true;
+  //this is the name of your ground picture.
+  imgPlatform =loadImage("objects/bricksMario.png");
+  this.display = function(){
+    if(this.show){
+      image(imgPlatform, this.x, this.y, this.w,this.h);
+    }//end if
+  }//end function
+  
+  this.update = function(){
+    this.x += platformSpeed;
+    if (this.x < -399){
+      this.x = 400;
+    }
+  }//end function
+}//end Ground
