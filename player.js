@@ -9,12 +9,14 @@ function Player(x, y, w, h) {
   this.yVelocity = 0;
   this.jumpStrength = 30;
   this.gravity = 0.9;
+  this.ground = 250;
   //this is the name of your ground picture.
   imgPlayer = loadImage("mario2.gif");
   //make sure the filename (the part in Green) matches
   //the name of your file, that you uploaded.
   imgJump = loadImage("jump.jpg");
   this.display = function () {
+    console.log(this.ground)
     if (this.show) {
       if(this.isOnGround()){
         image(imgPlayer, this.x, this.y, this.w, this.h);
@@ -29,8 +31,8 @@ function Player(x, y, w, h) {
     this.yVelocity += this.gravity;
     this.yVelocity *= 0.9;
     this.y += this.yVelocity;
-    if(this.y + this.h > g.y){
-      this.y = g.y - this.h;
+    if(this.y + this.h > this.ground+this.h){
+      this.y = this.ground;
       this.yVelocity = 0;
     }//end if
     
@@ -45,6 +47,7 @@ function Player(x, y, w, h) {
     }//end if
   }; //end function
   this.isOnGround = function(){
-      return this.y == g.y - this.h;
+      
+      return this.y == this.ground;
   }//end isOnGround
 } //end Ground
