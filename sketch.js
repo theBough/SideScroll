@@ -1,53 +1,49 @@
-let imgPlayer;
-let imgJump;
-function Player(x, y, w, h) {
-  this.x = x;
-  this.y = y;
-  this.w = w;
-  this.h = h;
-  this.show = true;
-  this.yVelocity = 0;
-  this.jumpStrength = 30;
-  this.gravity = 0.9;
-  this.ground = 250;
-  //this is the name of your ground picture.
-  imgPlayer = loadImage("mario2.gif");
-  //make sure the filename (the part in Green) matches
-  //the name of your file, that you uploaded.
-  imgJump = loadImage("jump.jpg");
-  this.display = function () {
-    console.log(this.ground)
-    if (this.show) {
-      if(this.isOnGround()){
-        image(imgPlayer, this.x, this.y, this.w, this.h);
-      }else{
-        image(imgJump, this.x, this.y, this.w, this.h);
-      }
-      
-    } //end if
-  }; //end function
+let g;
+let g2;
+let p;
+let pf = [];
+let whenToSend;
+let yRnd;
 
-  this.update = function () {
-    this.yVelocity += this.gravity;
-    this.yVelocity *= 0.9;
-    this.y += this.yVelocity;
-    if(this.y + this.h > this.ground+this.h){
-      this.y = this.ground;
-      this.yVelocity = 0;
-    }//end if
-    
-    if (keyIsDown(RIGHT_ARROW) && this.x <251) {
-      this.x += 5;
+function setup() {
+  createCanvas(400, 400);
+  g = new Ground(0, 300, 600, 100);
+  g2 = new Ground(400, 300, 600, 100);
+  p = new Player(100, 150, 50, 50);
+  yRnd = Math.floor(Math.random() * (height - 100));
+  pf.push(new Platform(width, yRnd, 30, 10));
+  whenToSend = 500;
+} //end Setup
+
+function draw() {
+  background(0);
+  whenToSend--;
+  if (whenToSend < 0) {
+    yRnd = Math.floor(Math.random() * (height - 100));
+    pf.push(new Platform(width, yRnd, 30, 10));
+    whenToSend = 50;
+  }
+  for (var i = 0; i < pf.length; i++) {
+    pf[i].display();
+    pf[i].update();
+    if (
+      p.x < pf[i].x + pf[i].w &&
+      p.x + p.w > pf[i].x &&
+      p.y < pf[i].y &&
+      p.y + p.h > pf[i].y
+    ) {
+      p.ground = pf[i].y - p.h;
+    } else {
+      // p.ground = 250
     }
-    if (keyIsDown(LEFT_ARROW)) {
-      this.x -= 5;
-    }
-    if(keyIsDown(32) && this.isOnGround()){
-      this.yVelocity += -this.jumpStrength;
-    }//end if
-  }; //end function
-  this.isOnGround = function(){
-      
-      return this.y == this.ground;
-  }//end isOnGround
-} //end Ground
+  }
+
+  p.display();
+  p.update();
+  g.display();
+  g2.display();
+  if (p.x > 250) {
+    g.update();
+    g2.update();
+  }
+} //end draw
