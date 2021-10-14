@@ -4,6 +4,7 @@ let p;
 let pf = [];
 let whenToSend;
 let yRnd;
+let activePlatform = 0
 
 function setup() {
   createCanvas(400, 400);
@@ -33,11 +34,13 @@ function draw() {
       p.y + p.h > pf[i].y
     ) {
       p.ground = pf[i].y - p.h;
+      activePlatform = i;
     } else {
       // p.ground = 250
-    }
-  }
+    }//end if
+  }//end loop
 
+ 
   p.display();
   p.update();
   g.display();
@@ -46,4 +49,19 @@ function draw() {
     g.update();
     g2.update();
   }
+  
+  if(!(onPlatForm(activePlatform))){
+    p.ground = g.y - p.h;
+  }
 } //end draw
+
+//This function is gonna check to see if Player is
+//on a platform.
+//It will return TRUE if the player is.
+//And return false once the Player is no longer on Platform.
+function onPlatForm(thisPf){
+  return( p.x < thisPf.x + thisPf.w &&
+      p.x + p.w > thisPf.x &&
+      p.y < thisPf.y &&
+      p.y + p.h > thisPf.y)
+}
