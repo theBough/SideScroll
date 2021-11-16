@@ -30,11 +30,12 @@ function draw() {
     if (
       p.x < pf[i].x + pf[i].w &&
       p.x + p.w > pf[i].x &&
-      p.y < pf[i].y &&
-      p.y + p.h > pf[i].y
+      p.y > pf[i].y - p.h *2 &&
+      p.y + p.h < pf[i].y + 5 
     ) {
       p.ground = pf[i].y - p.h;
       activePlatform = i;
+      p.x -= 1;
     } else {
       // p.ground = 250
     }//end if
